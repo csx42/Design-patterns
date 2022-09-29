@@ -1,5 +1,6 @@
 package studentCoursesBackup.driver;
-import studentCoursesBackup.util.conflicts;
+import studentCoursesBackup.util.FileDisplayInterface;
+import studentCoursesBackup.util.Results;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,6 +12,7 @@ class Course {
   private int capacity;
   private int classTime;
   private char courseName;
+
   public Course(int capacity, int classTime, char courseName) {
     this.capacity = capacity;
     this.classTime = classTime;
@@ -45,7 +47,6 @@ class Course {
   }
 
 }
-
 
 class Student {
   private int id;
@@ -105,18 +106,33 @@ class Student {
 
 }
 
-public class Driver {
-  private static Course[] courses;
-  private static Student[] students;
+interface main {
+  void readCourseInfo(String read);
+  void readCoursePrefs(String prefs);
+  void assignCourses(String conflicts,String errors);
+  void writeRegResults(String write);
+}
+
+public class Driver implements main {
+  public Course[] courses;
+  public Student[] students;
 
   public static void main(String[] args) {
-    readCourseInfo(args[1]);
-    readCoursePrefs(args[0]);
-    assignCourses(args[3]);
-    writeRegResults(args[2]);
+    if (args.length != 5 || args[0].equals("${arg0}") || args[1].equals("${arg1}") || args[2].equals("${arg2}")
+				|| args[3].equals("${arg3}") || args[4].equals("${arg4}")) {
+
+			System.err.println("Error: Incorrect number of arguments. Program accepts 5 arguments.");
+			System.exit(0);
+		}
+
+    Driver driver = new Driver();
+    driver.readCourseInfo(args[1]);
+    driver.readCoursePrefs(args[0]);
+    driver.assignCourses(args[3],args[4]);
+    driver.writeRegResults(args[2]);
   }
 
-  private static void readCourseInfo(String CourseInfo_args) {
+  public void readCourseInfo(String CourseInfo_args) {
     courses = new Course[9];
     try{
       Scanner s = new Scanner(new File(CourseInfo_args));
@@ -131,14 +147,14 @@ public class Driver {
       s.close();
     } 
     catch (FileNotFoundException e) {
-      e.printStackTrace();
+      System.err.println("File not found " + e);
+      System.exit(0);
     }
-    finally{
-    }
+    finally{}
   }
 
-  private static void readCoursePrefs(String coursePrefs_args) {
-    students = new Student[100];
+  public void readCoursePrefs(String coursePrefs_args) {
+    students = new Student[1000];
     try {
       Scanner s = new Scanner(new File(coursePrefs_args));
       int j=0;
@@ -156,14 +172,15 @@ public class Driver {
       s.close();
     } 
     catch (FileNotFoundException e) {
-      e.printStackTrace();
+      System.err.println("File not found " + e);
+      System.exit(0);
     }
-    finally{
-    }
+    finally{}
   }
 
-  public static void assignCourses(String reg_conflicts_args) {
+  public void assignCourses(String reg_conflicts_args, String err_args) {
     String c = "";
+    String d = "";
     for(Student student : students){
         if(student != null){
             for(int i =0; i < 9; i++){
@@ -197,35 +214,40 @@ public class Driver {
                               }
                           }
                           else{
-                            c= c + "Student " + student.getId() + " didnt get course "+ coursename + " due to the course capacity" + "\n";
+                            d= d + "Student " + student.getId() + " didnt get course "+ coursename + " due to the course capacity" + "\n";
                           } 
                       }
                   }
                 }
-                conflicts.write_regconflicts(c,reg_conflicts_args);
+                Results display = new Results();
+                display.write_regconflicts(c,reg_conflicts_args);
+                display.write_error(d,err_args);
             }
         }
     }   
   }
 
-  private static void writeRegResults(String reg_results_args) {
+  public void writeRegResults(String reg_results_args) {
     try {
+      int number_of_students = 0;
       java.io.PrintWriter writer = new java.io.PrintWriter(reg_results_args);
       float totalSatisfactionRating = 0;
       for(Student student : students) {
         if(student!=null){
           float f = student.getSatisfaction();
-          writer.printf(student.getId() + ": " + student.getCourses() + " ::SatisfactionRating=%.2f ", f/3 );
+          writer.printf(student.getId() + ": " + student.getCourses() + " :: SatisfactionRating=%.2f ", f/3 );
           writer.printf("\n");
-          float ff = student.getSatisfaction();
-          totalSatisfactionRating += ff/3;
+          totalSatisfactionRating += f/3;
+          number_of_students+=1;
         }
       }
-      writer.printf("Average SatisfactionRating=%.2f ", totalSatisfactionRating/3);
+      writer.printf("Average SatisfactionRating=%.2f ", totalSatisfactionRating/number_of_students);
       writer.close();
     } 
     catch (FileNotFoundException e) {
-      e.printStackTrace();
+      System.err.println("File not found " + e);
+      System.exit(0);
     }
+    finally{}
   }
 }
