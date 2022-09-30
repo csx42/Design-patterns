@@ -1,4 +1,5 @@
 package studentCoursesBackup.driver;
+
 import studentCoursesBackup.util.FileDisplayInterface;
 import studentCoursesBackup.util.Results;
 
@@ -8,10 +9,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/** Represents a course information decription.
+*/
+
 class Course {
   private int capacity;
   private int classTime;
   private char courseName;
+
+/** Creates a course with specified capacity, class time, name.
+ * @param capacity Course capacity.
+ * @param classTime Course class time.
+ * @param courseName Course name.
+*/
 
   public Course(int capacity, int classTime, char courseName) {
     this.capacity = capacity;
@@ -19,18 +29,33 @@ class Course {
     this.courseName = courseName;
   }
 
+/** Gets the course capacity.
+ * @return An integer representing the course capacity.
+*/
+
   public int getCapacity() {
     return capacity;
   }
 
+/** Gets the course classtime.
+ * @return An integer representing the course time.
+*/
 
   public int getClassTime() {
     return classTime;
   }
 
+/** Gets the course name.
+ * @return A character representing the course name.
+*/
+
   public char getCourseName() {
     return courseName;
   }
+
+/** Sets the course capacity.
+ * @param capactity An integer containing the capacity.
+*/
 
   public void setCapacity(int capacity) {
     this.capacity = capacity;
@@ -63,6 +88,13 @@ class Student {
     this.satisfaction = 0;
   }
 
+/**
+* Returns the Id of a student. 
+* This method returns the id of a particular student when this method is called.
+*
+* @return  integer id
+*/
+
   public int getId() {
     return id;
   }
@@ -82,6 +114,13 @@ class Student {
   public int getSatisfaction() {
     return satisfaction;
   }
+
+  /** 
+* The courses argument must be an array-list of strings which represents the courses.
+* This method sets the list of registerd courses of a particular student. 
+*
+* @param  courses  array-list of strings which represents the courses.
+*/
 
   public void setCourses(ArrayList<String> courses) {
     this.my_courses = courses;
