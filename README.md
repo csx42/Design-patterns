@@ -4,20 +4,20 @@
 -----------------------------------------------------------------------
 ### 1) Compiling and Running Commands:
 -----------------------------------------------------------------------
-Compilation: ant -buildfile studentCoursesBackup/src/build.xml all
+Compilation: ant -buildfile studentCoursesBackup/src/build.xml all <br>
 Running the code: ant -buildfile studentCoursesBackup/src/build.xml run -Darg0=coursePrefs.txt -Darg1=courseInfo.txt -Darg2=regResults.txt -Darg3=regConflicts.txt -Darg4=errorLog.txt 
 
 ### **NOTE**:
 
-While running the program note that:
-1st argument: -Darg0, must be course preference file.
-2nd argument: -Darg1, must be course info file.
-3rd argument: -Darg2, is the file where results are written.
-4th argument: -Darg3, is the file where time conflicts are written.
-4th argument: -Darg3, is the file where error in registration due to capacity are written.
+While running the program note that:     <br>
+1st argument: -Darg0, must be course preference file.      <br>
+2nd argument: -Darg1, must be course info file.         <br>
+3rd argument: -Darg2, is the file where results are written.       <br>
+4th argument: -Darg3, is the file where time conflicts are written.        <br>
+4th argument: -Darg3, is the file where error in registration due to capacity are written.      <br>
 
-CoursePrefs and courseInfo file must be on the same level of src.
-There is no need for regResult, errorlog and regConflicts files to be present while running. It will be created in the runtime.
+CoursePrefs and courseInfo file must be on the same level of src.<br>
+There is no need for regResult, errorlog and regConflicts files to be present while running. It will be created in the runtime.<br>
 
 -----------------------------------------------------------------------
 ### 2) Input Format Specification:
@@ -38,12 +38,12 @@ b.) coursePrefs.txt
 
 c.) regResults.txt
 
-- This will have the following format,
-	<student1_id>:[<course_1>,<course_2>,<course_3>]::SatisfactionRating=<value>
-	<student2_id>:[<course_1>,<course_2>,<course_3>]::SatisfactionRating=<value>
-	<student3_id>:[<course_1>,<course_2>,<course_3>]::SatisfactionRating=<value>
-	...
-	AverageSatisfactionRating=<value>
+- This will have the following format,<br>
+	<student1_id>:[<course_1>,<course_2>,<course_3>]::SatisfactionRating=<value>  <br>
+	<student2_id>:[<course_1>,<course_2>,<course_3>]::SatisfactionRating=<value>  <br>
+	<student3_id>:[<course_1>,<course_2>,<course_3>]::SatisfactionRating=<value>  <br>
+	...<br>
+	AverageSatisfactionRating=<value><br>
 
 d.) regConflicts.txt
 
